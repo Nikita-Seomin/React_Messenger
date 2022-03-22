@@ -1,0 +1,9 @@
+
+  .item{
+    color: rgb(155, 96, 107);
+  }
+
+  textarea{
+    overflow: auto;
+    resize: none;
+  }

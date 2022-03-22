@@ -1,0 +1,18 @@
+.dialogs{
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.interlocutor{
+    text-decoration: none;
+    color: aquamarine;
+}
+
+.active{
+    text-decoration: none;
+    color: gold;
+}
+
+.gaps{
+    margin: 20px 10px 10px 20px;
+}
