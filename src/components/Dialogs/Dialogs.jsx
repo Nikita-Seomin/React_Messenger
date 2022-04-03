@@ -2,12 +2,20 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import {NavLink} from "react-router-dom";
 
-const SetActiveLinkOrNot = ({isActive}) =>  isActive ? `${classes.active}` : `${classes.interlocutor}`;
+const SetActiveLinkOrNot = ({isActive}) => isActive ? `${classes.active}` : `${classes.interlocutor}`;
 
 const Interlocutor = (props) => {
-    return(
+    return (
         <div className={classes.gaps}>
-        <NavLink to={"/dialogs/" + props.id} className={SetActiveLinkOrNot} >{props.name}</NavLink>
+            <NavLink to={"/dialogs/" + props.id} className={SetActiveLinkOrNot}>{props.name}</NavLink>
+        </div>
+    );
+}
+
+const Message = (props) => {
+    return (
+        <div>
+            {props.message}
         </div>
     );
 }
@@ -15,16 +23,25 @@ const Interlocutor = (props) => {
 
 const Dialogs = () => {
 
-    let dialogsData = [
-        {id: 1, name: 'Dima' },
-        {id: 2, name: 'Anna' }
+    let dialogs = [
+        {id: 1, name: 'Dima'},
+        {id: 2, name: 'Anna'}
     ]
+    let messages = [
+        {message: 'hi'},
+        {message: 'hi, hi'}
+    ]
+
+    let dialogsElements = dialogs.map(d => <Interlocutor name={d.name} id={d.id}/>);
+    let messagesElements = messages.map(m => <Message message={m.message}/>);
 
     return (
         <div className={classes.dialogs}>
-            <div className={classes.interlocutor + ' ' + classes.active}>
-                <Interlocutor name={dialogsData[0].name} id={dialogsData[0].id} />
-                <Interlocutor name={dialogsData[1].name} id={dialogsData[1].id} />
+            <div>
+                {dialogsElements}
+            </div>
+            <div className={classes.messages}>
+                {messagesElements}
             </div>
         </div>
     );

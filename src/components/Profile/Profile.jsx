@@ -13,7 +13,6 @@ const Profile = () => {
         ava + discr
       </div>
       <MyPosts />
-      Main Content
     </div>
   );
 }
