@@ -1,39 +1,23 @@
 import React from 'react';
 import classes from './Dialogs.module.css';
-import {NavLink} from "react-router-dom";
-
-const SetActiveLinkOrNot = ({isActive}) => isActive ? `${classes.active}` : `${classes.interlocutor}`;
-
-const Interlocutor = (props) => {
-    return (
-        <div className={classes.gaps}>
-            <NavLink to={"/dialogs/" + props.id} className={SetActiveLinkOrNot}>{props.name}</NavLink>
-        </div>
-    );
-}
-
-const Message = (props) => {
-    return (
-        <div>
-            {props.message}
-        </div>
-    );
-}
+import MessageItem from "./MessageItems/MessageItems";
+import Messages from "./Messages/Messages";
+import {onMessageActionCreator, sendMessageActionCreator} from "../../Data/Dialogs-Creator";
 
 
-const Dialogs = () => {
+const Dialogs = (props) => {
 
-    let dialogs = [
-        {id: 1, name: 'Dima'},
-        {id: 2, name: 'Anna'}
-    ]
-    let messages = [
-        {message: 'hi'},
-        {message: 'hi, hi'}
-    ]
+    let state = props.store.getState().dialogsPage;
+    let dialogsElements = state.dialogs.map(d => <MessageItem name={d.name} id={d.id}/>);
+    let messagesElements = state.messages.map(m => <Messages message={m.message}/>);
 
-    let dialogsElements = dialogs.map(d => <Interlocutor name={d.name} id={d.id}/>);
-    let messagesElements = messages.map(m => <Message message={m.message}/>);
+    let onChangeMessage = (e) => {
+        debugger;
+        props.store.dispatch(onMessageActionCreator(e.target.value));
+    }
+    let sendNewMessage = () => {
+        props.store.dispatch(sendMessageActionCreator());
+    }
 
     return (
         <div className={classes.dialogs}>
@@ -42,6 +26,14 @@ const Dialogs = () => {
             </div>
             <div className={classes.messages}>
                 {messagesElements}
+            </div>
+            <div>
+                <textarea onChange={onChangeMessage}
+                          value={state.newMessageText}
+                          placeholder={"Enter your message"} />
+            </div>
+            <div>
+                <button onClick={sendNewMessage} >send</button>
             </div>
         </div>
     );

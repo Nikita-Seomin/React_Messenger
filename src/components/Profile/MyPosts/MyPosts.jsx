@@ -1,22 +1,30 @@
 import React from 'react';
-
 import Post from './Post/Post';
+import {newPostMessageActionCreator, onPostChangeActionCreator} from "../../../Data/Profile-Creator";
 
-const MyPosts = () => {
 
-    let posts = [
-        {post: "post1"},
-        {post: "post2"}
-    ]
+const MyPosts = (props) => {
 
-    let postsElements = posts.map(p => <Post post={p.post}/>)
+    let postsElements = props.profilePage.posts.map(p => <Post post={p.post}/>)
+    let newPostText = React.createRef();
+
+    const newPostMessage = () => {
+        props.dispatch(newPostMessageActionCreator());
+    }
+    
+    const onPostChange = () => {
+        props.dispatch(onPostChangeActionCreator(newPostText.current.value));
+    }
 
     return (
         <div>
             my post
             <div>
-                <textarea placeholder="input your post"></textarea>
-                <button>Add post</button>
+                <textarea onChange={onPostChange}
+                          ref={newPostText}
+                          value={props.profilePage.newPostText}
+                          placeholder="input your post"/>
+                <button onClick={newPostMessage}>Add post</button>
             </div>
             <div>
                 {postsElements}
