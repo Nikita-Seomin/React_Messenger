@@ -2,21 +2,18 @@ import React from 'react';
 import classes from './Dialogs.module.css';
 import MessageItem from "./MessageItems/MessageItems";
 import Messages from "./Messages/Messages";
-import {onMessageActionCreator, sendMessageActionCreator} from "../../Data/Dialogs-Creator";
 
 
 const Dialogs = (props) => {
 
-    let state = props.store.getState().dialogsPage;
-    let dialogsElements = state.dialogs.map(d => <MessageItem name={d.name} id={d.id}/>);
-    let messagesElements = state.messages.map(m => <Messages message={m.message}/>);
+    let dialogsElements = props.dialogsPage.dialogs.map(d => <MessageItem name={d.name} id={d.id}/>);
+    let messagesElements = props.dialogsPage.messages.map(m => <Messages message={m.message}/>);
 
     let onChangeMessage = (e) => {
-        debugger;
-        props.store.dispatch(onMessageActionCreator(e.target.value));
+        props.onChangeMessage(e.target.value);
     }
     let sendNewMessage = () => {
-        props.store.dispatch(sendMessageActionCreator());
+        props.sendNewMessage();
     }
 
     return (
@@ -29,7 +26,7 @@ const Dialogs = (props) => {
             </div>
             <div>
                 <textarea onChange={onChangeMessage}
-                          value={state.newMessageText}
+                          value={props.dialogsPage.newMessageText}
                           placeholder={"Enter your message"} />
             </div>
             <div>
