@@ -9,21 +9,25 @@ const initialState = {
     newPostText: ''
 }
 
-const profileCreator = (state = initialState, action) => {
-    // eslint-disable-next-line default-case
+const profileReducer = (state = initialState, action) => {
     switch (action.type){
         case ADD_POST:
             let newPost = {
                 post: state.newPostText
-            }
-            state.posts.push(newPost);
-            state.newPostText = '';
-            break;
+            };
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newPostText: ''
+            };
         case UPDATE_NEW_POST_MESSAGE:
-            state.newPostText = action.newMessage;
-            break;
+            return{
+                ...state,
+                newPostText: action.newMessage
+            };
+        default:
+            return state;
     }
-    return state;
 }
 
 
@@ -33,4 +37,4 @@ export const onPostChangeActionCreator = (newPostText) => ({
     newMessage: newPostText
 });
 
-export default profileCreator;
+export default profileReducer;
