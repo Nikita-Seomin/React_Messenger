@@ -1,4 +1,5 @@
 let ADD_POST = 'ADD-POST';
+let SET_PROFILE = 'SET-PROFILE';
 let UPDATE_NEW_POST_MESSAGE = 'UPDATE-NEW-POST-MESSAGE';
 
 const initialState = {
@@ -6,11 +7,12 @@ const initialState = {
         {post: "post1"},
         {post: "post2"}
     ],
-    newPostText: ''
+    newPostText: '',
+    profile: null
 }
 
 const profileReducer = (state = initialState, action) => {
-    switch (action.type){
+    switch (action.type) {
         case ADD_POST:
             let newPost = {
                 post: state.newPostText
@@ -21,9 +23,15 @@ const profileReducer = (state = initialState, action) => {
                 newPostText: ''
             };
         case UPDATE_NEW_POST_MESSAGE:
-            return{
+            return {
                 ...state,
-                newPostText: action.newMessage
+                newPostText: action.newPostText
+            };
+        case SET_PROFILE:
+            return {
+                ...state,
+                profile: action.profile
+
             };
         default:
             return state;
@@ -31,10 +39,8 @@ const profileReducer = (state = initialState, action) => {
 }
 
 
-export const newPostMessageActionCreator = () => ({type: ADD_POST});
-export const onPostChangeActionCreator = (newPostText) => ({
-    type: UPDATE_NEW_POST_MESSAGE,
-    newMessage: newPostText
-});
+export const addPost = () => ({type: ADD_POST});
+export const onPostChange = (newPostText) => ({type: UPDATE_NEW_POST_MESSAGE, newPostText});
+export const setProfile = (profile) => ({type: SET_PROFILE, profile});
 
 export default profileReducer;
